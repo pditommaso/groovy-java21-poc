@@ -5,7 +5,13 @@ package org.example
 
 class App {
     String getGreeting() {
-        return "Runtime: Groovy ${GroovySystem.getVersion()} on ${System.getProperty('java.vm.name')} ${System.getProperty('java.runtime.version')}"
+        final list = new ArrayList<>()
+        list << 'Runtime: Groovy'
+        list << GroovySystem.getVersion()
+        list << 'on'
+        list << System.getProperty('java.vm.name')
+        list << System.getProperty('java.runtime.version')
+        return list.join(' ')
     }
 
     static void main(String[] args) {
