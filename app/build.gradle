@@ -38,6 +38,15 @@ java {
     }
 }
 
+compileJava {
+    options.release.set(11)
+}
+
+tasks.withType(GroovyCompile) {
+    sourceCompatibility = '11'
+    targetCompatibility = '11'
+}
+
 application {
     // Define the main class for the application.
     mainClass = 'org.example.App'
@@ -46,4 +55,12 @@ application {
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+}
+
+task saveRuntimeClasspath {
+    def runtimeClasspath = sourceSets.main.runtimeClasspath
+    inputs.files( runtimeClasspath )
+    doLast {
+        new File('.classpath').text = runtimeClasspath.join( File.pathSeparator )
+    }
 }
