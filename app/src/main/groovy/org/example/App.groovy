@@ -5,6 +5,8 @@ package org.example
 
 class App {
     String getGreeting() {
+        GroovyShell sh = new GroovyShell();
+        sh.evaluate('''
         final list = new ArrayList<>()
         list << 'Runtime: Groovy'
         list << GroovySystem.getVersion()
@@ -12,6 +14,7 @@ class App {
         list << System.getProperty('java.vm.name')
         list << System.getProperty('java.runtime.version')
         return list.join(' ')
+        ''')
     }
 
     static void main(String[] args) {
