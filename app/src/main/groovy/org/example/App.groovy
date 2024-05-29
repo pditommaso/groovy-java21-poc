@@ -3,40 +3,22 @@
  */
 package org.example
 
-import java.nio.file.Path
 
 import groovy.transform.CompileStatic
-import org.codehaus.groovy.control.CompilerConfiguration
-import org.codehaus.groovy.control.customizers.ImportCustomizer
 
 @CompileStatic
 class App {
-    String getGreeting() {
-        GroovyShell sh = new GroovyShell(new GroovyClassLoader(), getConfig())
-        sh.evaluate('''
-        final list = new ArrayList<>()
-        list << 'Runtime: Groovy'
-        list << GroovySystem.getVersion()
-        list << 'on'
-        list << System.getProperty('java.vm.name')
-        list << System.getProperty('java.runtime.version')
-        return list.join(' ')
-        ''')
+    String getSysInfo() {
+        "Runtime: Groovy ${GroovySystem.getVersion()} on ${System.getProperty('java.vm.name')} ${System.getProperty('java.runtime.version')}"
     }
 
-    CompilerConfiguration getConfig() {
-        // define the imports
-        def importCustomizer = new ImportCustomizer()
-        importCustomizer.addImports( Path.name )
-
-        final config = new CompilerConfiguration()
-        config.addCompilationCustomizers( importCustomizer )
-        config.scriptBaseClass = BaseScript.class.name
-
-        return config
+    void run() {
+        println getSysInfo()
+        println ListOK.spread([1, 2, 3] as Object[])
+        println ListDelegate.spread([1, 2, 3] as Object[])
     }
 
     static void main(String[] args) {
-        println new App().greeting
+        new App().run()
     }
 }
