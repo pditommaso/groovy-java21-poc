@@ -3,9 +3,16 @@
  */
 package org.example
 
+import java.nio.file.Path
+
+import groovy.transform.CompileStatic
+import org.codehaus.groovy.control.CompilerConfiguration
+import org.codehaus.groovy.control.customizers.ImportCustomizer
+
+@CompileStatic
 class App {
     String getGreeting() {
-        GroovyShell sh = new GroovyShell();
+        GroovyShell sh = new GroovyShell(new GroovyClassLoader(), getConfig())
         sh.evaluate('''
         final list = new ArrayList<>()
         list << 'Runtime: Groovy'
@@ -15,6 +22,18 @@ class App {
         list << System.getProperty('java.runtime.version')
         return list.join(' ')
         ''')
+    }
+
+    CompilerConfiguration getConfig() {
+        // define the imports
+        def importCustomizer = new ImportCustomizer()
+        importCustomizer.addImports( Path.name )
+
+        final config = new CompilerConfiguration()
+        config.addCompilationCustomizers( importCustomizer )
+        config.scriptBaseClass = BaseScript.class.name
+
+        return config
     }
 
     static void main(String[] args) {
