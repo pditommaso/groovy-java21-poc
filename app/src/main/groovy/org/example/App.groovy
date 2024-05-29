@@ -14,8 +14,8 @@ class App {
 
     void run() {
         println getSysInfo()
-        println ListOK.spread([1, 2, 3] as Object[])
-        println ListDelegate.spread([1, 2, 3] as Object[])
+        println "Plain list sub-class: " + ListOK.spread([1, 2, 3] as Object[])
+        println "Delegate list class : " +  ListDelegate.spread([1, 2, 3] as Object[])
     }
 
     static void main(String[] args) {
