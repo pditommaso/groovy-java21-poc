@@ -55,3 +55,6 @@ This causes an issue in Groovy when the following conditions are met:
     at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:522)
     ... 2 more
   ```
+
+### Links
+* [Groovy issue](https://issues.apache.org/jira/browse/GROOVY-11389)
